@@ -14,8 +14,10 @@ deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu trusty main\n\
 
 # no Upstart or DBus
 # https://github.com/dotcloud/docker/issues/1724#issuecomment-26294856
-RUN apt-mark hold initscripts udev plymouth mountall
-RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
+# RUN apt-mark hold initscripts udev plymouth mountall
+# RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
+
+RUN dpkg-divert --local --rename /usr/bin/ischroot && ln -sf /bin/true /usr/bin/ischroot
 
 RUN apt-get update \
     && apt-get install -y --force-yes --no-install-recommends supervisor \
