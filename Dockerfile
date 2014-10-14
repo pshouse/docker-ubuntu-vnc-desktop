@@ -4,32 +4,23 @@ MAINTAINER Doro Wu <fcwu.tw@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME /root
 
-# setup our Ubuntu sources (ADD breaks caching)
-RUN echo "deb http://tw.archive.ubuntu.com/ubuntu/ trusty main\n\
-deb http://tw.archive.ubuntu.com/ubuntu/ trusty multiverse\n\
-deb http://tw.archive.ubuntu.com/ubuntu/ trusty universe\n\
-deb http://tw.archive.ubuntu.com/ubuntu/ trusty restricted\n\
-deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu trusty main\n\
-"> /etc/apt/sources.list
+RUN dpkg --add-architecture i386 && apt-get update
+RUN apt-get install -y libc6:i386
+RUN apt-get install -y wget unzip
+RUN wget ftp.squeak.org/4.5/Squeak-4.5-All-in-One.zip && unzip Squeak-4.5-All-in-One.zip
 
-# no Upstart or DBus
-# https://github.com/dotcloud/docker/issues/1724#issuecomment-26294856
-# RUN apt-mark hold initscripts udev plymouth mountall
-# RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
-
-RUN dpkg-divert --local --rename /usr/bin/ischroot && ln -sf /bin/true /usr/bin/ischroot
+#Install Squeak GUI support
+RUN apt-get install -y libX-6:i386 libX11-6:i386 libice6:i386 libgl1-mesa-glx:i386 libsm6:i386
 
 RUN apt-get update \
     && apt-get install -y --force-yes --no-install-recommends supervisor \
-        openssh-server pwgen sudo vim-tiny \
+        pwgen \
         net-tools \
         lxde x11vnc xvfb \
         gtk2-engines-murrine ttf-ubuntu-font-family \
-        nodejs \
         libreoffice firefox \
     && apt-get autoclean \
-    && apt-get autoremove \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get autoremove
 
 ADD noVNC /noVNC/
 
