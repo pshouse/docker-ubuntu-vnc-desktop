@@ -14,7 +14,7 @@ RUN apt-get install -y libX11-6:i386 libice6:i386 libgl1-mesa-glx:i386 libsm6:i3
 
 RUN apt-get update \
     && apt-get install -y --force-yes --no-install-recommends supervisor \
-        pwgen \
+        openssh-server pwgen \
         net-tools \
         lxde x11vnc xvfb \
         gtk2-engines-murrine ttf-ubuntu-font-family \
