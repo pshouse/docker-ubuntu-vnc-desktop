@@ -10,7 +10,7 @@ RUN apt-get install -y wget unzip
 RUN wget ftp.squeak.org/4.5/Squeak-4.5-All-in-One.zip && unzip Squeak-4.5-All-in-One.zip
 
 #Install Squeak GUI support
-RUN apt-get install -y libX-6:i386 libX11-6:i386 libice6:i386 libgl1-mesa-glx:i386 libsm6:i386
+RUN apt-get install -y libX11-6:i386 libice6:i386 libgl1-mesa-glx:i386 libsm6:i386
 
 RUN apt-get update \
     && apt-get install -y --force-yes --no-install-recommends supervisor \
