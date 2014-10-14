@@ -26,6 +26,8 @@ ADD noVNC /noVNC/
 
 ADD startup.sh /
 ADD supervisord.conf /
+ADD autostart /etc/xdg/lxsession/LXDE
+
 EXPOSE 6080
 EXPOSE 5900
 EXPOSE 22
